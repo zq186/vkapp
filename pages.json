@@ -69,6 +69,15 @@
             "path" : "pages/app/setting/setting",
             "style" : {}
         }
+        ,{
+            "path" : "pages/app/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"subPackages": [{
 			"root": "pages/componentsC",

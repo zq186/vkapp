@@ -36,7 +36,7 @@ Vue.use(VueI18n)
 
 const i18n = new VueI18n({
 	// 默认语言
-	locale: 'zh',
+	locale: 'en',
 	// 引入语言文件
 	messages: {
 		'zh': Chinese,
