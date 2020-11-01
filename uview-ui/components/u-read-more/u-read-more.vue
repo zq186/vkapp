@@ -2,7 +2,7 @@
 	<view class="">
 		<view class="u-content" :class="[elId]" :style="{ 
 			height: isLongContent && !showMore ? showHeight + 'rpx' : 'auto',
-			textIndent: textIndent
+			textIndent: this.textIndent
 		}">
 			<slot></slot>
 		</view>
@@ -114,7 +114,7 @@
 			};
 		},
 		mounted() {
-			this.$nextTick(() => {
+			this.$nextTick(function() {
 				this.init();
 			})
 		},

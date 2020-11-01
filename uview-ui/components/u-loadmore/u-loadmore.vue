@@ -41,7 +41,7 @@
 	export default {
 		name: "u-loadmore",
 		props: {
-			// 组件背景色
+			//当前页面背景颜色，如果背景为非白色的时候，需要把此值设置为背景的颜色
 			bgColor: {
 				type: String,
 				default: 'transparent'

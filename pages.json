@@ -53,12 +53,7 @@
 				}
 			}
 		}
-	    ,{
-            "path" : "pages/app/index/index",
-            "style" : {
-				"navigationBarTitleText": "MIG"
-			}
-        }
+	    
         ,{
             "path" : "pages/app/detail/detail",
             "style" : {
@@ -77,6 +72,14 @@
                 "enablePullDownRefresh": false
             }
             
+        }
+        ,{
+            "path" : "pages/app/myCenter/myCenter",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/app/valveList/valveList",
+            "style" : {}
         }
     ],
 	"subPackages": [{

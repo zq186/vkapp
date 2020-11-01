@@ -9,10 +9,5 @@ module.exports = {
 	},
 	onShareAppMessage() {
 		return this.$u.mpShare
-	},
-	// #ifdef MP-WEIXIN
-	onShareTimeline() {
-		return this.$u.mpShare
 	}
-	// #endif
 }
