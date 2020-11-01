@@ -873,22 +873,16 @@
 		"backgroundColor": "#FFFFFF",
 		"borderStyle": "black",
 		"list": [{
-				"pagePath": "pages/example/components",
+				"pagePath": "pages/app/valveList/valveList",
 				"iconPath": "static/uview/example/component.png",
 				"selectedIconPath": "static/uview/example/component_select.png",
-				"text": "组件"
+				"text": "首页"
 			},
 			{
-				"pagePath": "pages/example/js",
-				"iconPath": "static/uview/example/js.png",
-				"selectedIconPath": "static/uview/example/js_select.png",
-				"text": "工具"
-			},
-			{
-				"pagePath": "pages/example/template",
+				"pagePath": "pages/app/myCenter/myCenter",
 				"iconPath": "static/uview/example/template.png",
 				"selectedIconPath": "static/uview/example/template_select.png",
-				"text": "模板"
+				"text": "我的"
 			}
 		]
 	}

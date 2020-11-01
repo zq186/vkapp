@@ -40,21 +40,14 @@ const store = new Vuex.Store({
 		vuex_tabbar: [{
 				iconPath: "/static/uview/example/component.png",
 				selectedIconPath: "/static/uview/example/component_select.png",
-				text: '组件',
-				pagePath: '/pages/example/components'
-			},
-			{
-				iconPath: "/static/uview/example/js.png",
-				selectedIconPath: "/static/uview/example/js_select.png",
-				text: '工具',
-				midButton: true,
-				pagePath: '/pages/example/js'
+				text: '首页',
+				pagePath: '/pages/app/valveList/valveList' 
 			},
 			{
 				iconPath: "/static/uview/example/template.png",
 				selectedIconPath: "/static/uview/example/template_select.png",
-				text: '模板',
-				pagePath: '/pages/example/template'
+				text: '我的',
+				pagePath: '/pages/app/myCenter/myCenter'
 			}
 		]
 	},
