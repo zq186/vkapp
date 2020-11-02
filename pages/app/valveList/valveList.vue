@@ -2,21 +2,20 @@
 	<view>
 		<view class="wrap">
 			<view class="u-tabs-box">
-				<u-tabs-swiper activeColor="#f29100" ref="tabs" :list="list" :current="current" @change="change" :is-scroll="false"
-				 swiperWidth="750"></u-tabs-swiper>
+				<u-tabs-swiper activeColor="#f29100" ref="tabs" :list="list" :current="current" @change="change" :is-scroll="false" swiperWidth="750"></u-tabs-swiper>
 			</view>
 			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 				<swiper-item class="swiper-item">
 					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="reachBottom">
 						<view class="page-box">
-								<view class="order" v-for="(res, index) in  repairList[0]" :key="res.id">
-								<view class="item" @click="onclick(item)" v-for="(item, index) in res.cvList" :key="index">
+								<view class="order" v-for="(item, index) in  repairList[0]" :key="item.id">
+								<view class="item" @click="onclick(item)"  >
 									<view class="left">
-										<image :src="item.goodsUrl" mode="aspectFill"></image>
+										<image :src="item.iconUrl" mode="aspectFill"></image>
 									</view>
 									<view class="content">
-										<view class="title u-line-2">{{ item.serial }}</view>
-										<view class="type">{{ item.type }}</view>
+										<view class="title u-line-2">{{ item.tagnumber }}</view>
+										<view class="type">{{ item.createdby }}</view>
 
 									</view>
 
@@ -88,7 +87,7 @@
 				</swiper-item>
 			</swiper>
 		</view>
-		 <u-tabbar  :list="vuex_tabbar" :mid-button="false"></u-tabbar>
+		 <u-tabbar @change="tabbarChange" :v-model="barIndex"  :list="vuex_tabbar" :mid-button="false"></u-tabbar>
 	</view>
 </template>
 
@@ -118,6 +117,8 @@
 					}
 				],
 				swiperCurrent: 0,
+				current:0,
+				barIndex:0,
 				tabsHeight: 0,
 				dx: 0,
 				loadStatus: ['loadmore', 'loadmore', 'loadmore', 'loadmore'],
@@ -125,7 +126,7 @@
 			};
 		},
 		onLoad() {
-			//this.getRepairList(0);
+			this.getRepairList(0);
 			//this.getRepairList(1);
 			//this.getRepairList(3);
 		},
@@ -142,6 +143,9 @@
 					}, 1200);
 				}
 			},
+			tabbarChange(index){
+				this.barIndex=index++;
+			},
 			// 页面数据
 			getRepairList(idx) {
 				var request = {
@@ -150,20 +154,22 @@
 					"limit": 10,
 					"et": "RV",
 					"whereClause": "1=1",
-					"pKey": "20200205133900100000",
-					"oKey": "20181126164759900000",
+					"pKey": "20200727092324600000",
+					"oKey": "20200727092222600000",
 					"retcntonly": false
 				}
 				this.$u.post('/v1/vkc/Valves', request).then(res => {
 				
 					if (res.code == 200) {
-						let dataList = res.result.repairdetail;
+						 let dataList = res.result.repairdetail;
 						for (let i = 0; i < dataList.length; i++) {
 							
 							let data = dataList[i];
 							data.id = this.$u.guid();
+							data.iconUrl='http://47.97.109.45/valve/1.jpg';
 							this.repairList[idx].push(data);
 						}
+					   
 					} 
 
 				}, err => {

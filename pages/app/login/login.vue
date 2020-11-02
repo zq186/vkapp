@@ -1,23 +1,25 @@
 <template>
+	
 	<view class="wrap">
 
 		<view class="content">
 			<view class="title">欢迎登录VKC</view>
 			<input class="u-border-bottom" type="text" v-model="username" placeholder="请输入用户名" />
 			<input class="u-border-bottom" type="password" v-model="password" placeholder="请输入密码" />
-			<button @tap="submit" :style="[inputStyle]" class="getCaptcha">登陆</button>
-
+			<!-- <button @tap="submit" :style="[inputStyle]" :shape="circle" class="getCaptcha">登陆</button> -->
+			<u-button @click="submit"   shape="circle" >Login</u-button>
 		</view>
 
 	</view>
+	
 </template>
 
 <script>
 	export default {
 		data() {
 			return {
-				username: '',
-				password: ''
+				username: 'jerryadmin',
+				password: 'NF5Xm^OQ53I1N5='
 			}
 		},
 		computed: {
@@ -27,12 +29,15 @@
 				return style;
 			}
 		},
+		onLoad() {
+			uni.setStorageSync('Authorization','');
+		},
 		methods: {
 			submit() {
 				let _this = this;
 				let request = {
-					"username": "zhuqiang",
-					"password": "sha2118L$",
+					"username": _this.username,
+					"password": _this.password,
 					"tenantcode": "mig"
 				}
 				this.$u.post('/v1/vkc/Auth/login', request).then(res => {
@@ -55,10 +60,10 @@
 <style lang="scss" scoped>
 	.wrap {
 		font-size: 28rpx;
-
+		margin: 80rpx auto 0;
 		.content {
 			width: 600rpx;
-			margin: 80rpx auto 0;
+			margin: 160rpx auto 0;
 
 			.title {
 				text-align: left;
@@ -69,8 +74,8 @@
 
 			input {
 				text-align: left;
-				margin-bottom: 10rpx;
-				padding-bottom: 6rpx;
+				margin-bottom: 60rpx;
+				padding-bottom: 10rpx;
 			}
 
 			.tips {

@@ -21,6 +21,12 @@ export default [
 				icon: 'debounce',
 				title: 'Throttle | Debounce 节流防抖',
 				title_en: 'Throttle | Debounce',
+			},
+			{
+				path: 'pages/app/login/login',
+				icon: 'debounce',
+				title: '登出',
+				title_en: 'logout',
 			}
 		]
 	}
