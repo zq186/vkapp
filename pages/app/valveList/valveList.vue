@@ -14,7 +14,7 @@
 										<image :src="item.iconUrl" mode="aspectFill"></image>
 									</view>
 									<view class="content">
-										<view class="title u-line-2">{{ item.tagnumber }}</view>
+										<view class="title u-line-2">{{ item.tagnumber }}/{{ item.serial }}</view>
 										<view class="type">{{ item.createdby }}</view>
 
 									</view>
@@ -97,23 +97,14 @@
 			return {
 				repairList: [
 					[],
-					[],
-					[],
 					[]
 				],
 				dataList:[],
 				list: [{
-						name: 'CV'
-					},
-					{
 						name: 'RV'
 					},
 					{
-						name: 'MOV'
-					},
-					{
-						name: 'LV',
-						count: 12
+						name: 'CV'
 					}
 				],
 				swiperCurrent: 0,
@@ -148,6 +139,7 @@
 			},
 			// 页面数据
 			getRepairList(idx) {
+				let _this=this;
 				var request = {
 					"mr": true,
 					"offset": 1,
@@ -158,6 +150,7 @@
 					"oKey": "20200727092222600000",
 					"retcntonly": false
 				}
+				
 				this.$u.post('/v1/vkc/Valves', request).then(res => {
 				
 					if (res.code == 200) {

@@ -79,7 +79,27 @@
         }
         ,{
             "path" : "pages/app/valveList/valveList",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText":"valve"
+			}
+        }
+        ,{
+            "path" : "pages/app/changeOwnerPlant/changeOwnerPlant",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/app/changeOwnerPlant/ownerPlant",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
         }
     ],
 	"subPackages": [{

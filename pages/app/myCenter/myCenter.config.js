@@ -1,26 +1,26 @@
 export default [
 	
+	// {
+	// 	groupName: '全局变量',
+	// 	groupName_en: 'Global Settings',
+	// 	list: [
+	// 		{
+	// 			path: 'pages/app/setting/setting',
+	// 			icon: 'globalVariable',
+	// 			title: 'GlobalVariable 全局变量',
+	// 			title_en: 'GlobalVariable',
+	// 		}
+	// 	]
+	// },
 	{
-		groupName: '全局变量',
+		groupName: '工具库',
 		groupName_en: 'Global Settings',
 		list: [
 			{
-				path: 'pages/app/setting/setting',
-				icon: 'globalVariable',
-				title: 'GlobalVariable 全局变量',
-				title_en: 'GlobalVariable',
-			}
-		]
-	},
-	{
-		groupName: '工具库',
-		groupName_en: 'Tool library',
-		list: [
-			{
-				path: 'debounce',
+				path: 'pages/app/changeOwnerPlant/changeOwnerPlant',
 				icon: 'debounce',
-				title: 'Throttle | Debounce 节流防抖',
-				title_en: 'Throttle | Debounce',
+				title: '切换集团工厂',
+				title_en: 'Change Owner/Plant',
 			},
 			{
 				path: 'pages/app/login/login',
