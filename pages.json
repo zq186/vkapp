@@ -15,7 +15,7 @@
 		{
 			"path": "pages/app/index/index",
 			"style": {
-				"navigationBarTitleText": "MIG"
+				"navigationBarTitleText": "Tenant: MIG"
 			}
 		},
 		// avatarCropper-头像裁剪
@@ -57,7 +57,7 @@
         ,{
             "path" : "pages/app/detail/detail",
             "style" : {
-				"navigationBarTitleText": "detail"
+				"navigationBarTitleText": "Valve Details"
 			}
         }
         ,{
@@ -80,7 +80,7 @@
         ,{
             "path" : "pages/app/valveList/valveList",
             "style" : {
-				"navigationBarTitleText":"valve"
+				"navigationBarTitleText":"Home"
 			}
         }
         ,{
@@ -883,7 +883,7 @@
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uView",
+		"navigationBarTitleText": "Settings",
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#FFFFFF"
 	},

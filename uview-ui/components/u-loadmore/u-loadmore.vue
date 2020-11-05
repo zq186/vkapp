@@ -76,9 +76,9 @@
 				type: Object,
 				default () {
 					return {
-						loadmore: '加载更多',
-						loading: '正在加载...',
-						nomore: '没有更多了'
+						loadmore: 'Load More',
+						loading: 'Loading...',
+						nomore: 'No More items'
 					}
 				}
 			},

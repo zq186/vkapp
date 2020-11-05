@@ -55,10 +55,10 @@
 								<view class="centre">
 									<image src="https://cdn.uviewui.com/uview/template/taobao-order.png" mode=""></image>
 									<view class="explain">
-										no valve
+										No items to dislay
 
 									</view>
-									<view class="btn">add valve</view>
+									<view class="btn">Add Valve</view>
 								</view>
 							</view>
 						</view>
@@ -101,10 +101,10 @@
 				],
 				dataList:[],
 				list: [{
-						name: 'RV'
+						name: 'Relief Valve'
 					},
 					{
-						name: 'CV'
+						name: 'Control Valve'
 					}
 				],
 				swiperCurrent: 0,

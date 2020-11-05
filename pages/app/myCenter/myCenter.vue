@@ -6,15 +6,15 @@
 				<u-avatar :src="pic" size="140"></u-avatar>
 			</view>
 			<view class="u-flex-1">
-				<view class="u-font-18 u-p-b-20">uView ui</view>
-				<view class="u-font-14 u-tips-color">user name:helang_uView</view>
+				<view class="u-font-18 u-p-b-20">JerryAdmin</view>
+<!--				<view class="u-font-14 u-tips-color">user name:helang_uView</view>-->
 			</view>
-			<view class="u-m-l-10 u-p-10">
+			<!--<view class="u-m-l-10 u-p-10">
 				<u-icon name="scan" color="#969799" size="28"></u-icon>
 			</view>
 			<view class="u-m-l-10 u-p-10">
 				<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
-			</view>
+			</view> -->
 		</view>
 		
 		<view class="list-wrap">
@@ -34,7 +34,7 @@
 	export default {
 		data() {
 			return {
-				pic:'https://uviewui.com/common/logo.png',
+				pic:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604420674241&di=347686d0146f7582233128df39ee3d9e&imgtype=0&src=http%3A%2F%2Fb.hiphotos.baidu.com%2Fzhidao%2Fwh%253D450%252C600%2Fsign%3D130e1bfd708b4710ce7af5c8f6feefcb%2Fb90e7bec54e736d186816fd499504fc2d4626958.jpg',
 				show:true,
 				list:list
 			}

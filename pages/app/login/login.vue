@@ -3,9 +3,9 @@
 	<view class="wrap">
 
 		<view class="content">
-			<view class="title">欢迎登录VKC</view>
-			<input class="u-border-bottom" type="text" v-model="username" placeholder="请输入用户名" />
-			<input class="u-border-bottom" type="password" v-model="password" placeholder="请输入密码" />
+			<view class="title">VKC Mobile</view>
+			<input class="u-border-bottom" type="text" v-model="username" placeholder="Please enter use name" />
+			<input class="u-border-bottom" type="password" v-model="password" placeholder="Please enter password" />
 			<!-- <button @tap="submit" :style="[inputStyle]" :shape="circle" class="getCaptcha">登陆</button> -->
 			<u-button @click="submit"   shape="circle" >Login</u-button>
 		</view>

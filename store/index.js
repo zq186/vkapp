@@ -43,13 +43,13 @@ const store = new Vuex.Store({
 		vuex_tabbar: [{
 				iconPath: "/static/uview/example/component.png",
 				selectedIconPath: "/static/uview/example/component_select.png",
-				text: '首页',
+				text: 'Home',
 				pagePath: '/pages/app/valveList/valveList' 
 			},
 			{
 				iconPath: "/static/uview/example/template.png",
 				selectedIconPath: "/static/uview/example/template_select.png",
-				text: '我的',
+				text: 'Settings',
 				pagePath: '/pages/app/myCenter/myCenter'
 			}
 		]
