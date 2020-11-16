@@ -18,8 +18,8 @@
 	export default {
 		data() {
 			return {
-				username: 'jerryadmin',
-				password: 'NF5Xm^OQ53I1N5='
+				username: 'jerry',
+				password: 'VKc@2016L'
 			}
 		},
 		computed: {
@@ -46,7 +46,7 @@
 						let userToken = 'Bearer ' + res.usertoken.authtoken;
 						uni.setStorageSync('Authorization',userToken)
 						this.$u.route({
-							url: 'pages/app/index/index'
+							url: 'pages/app/valveList/valveList'
 						})
 					}
 				}, err => {

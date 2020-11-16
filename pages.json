@@ -893,7 +893,7 @@
 		"backgroundColor": "#FFFFFF",
 		"borderStyle": "black",
 		"list": [{
-				"pagePath": "pages/app/valveList/valveList",
+				"pagePath": "pages/app/index/index",
 				"iconPath": "static/uview/example/component.png",
 				"selectedIconPath": "static/uview/example/component_select.png",
 				"text": "首页"

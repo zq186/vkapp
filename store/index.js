@@ -44,7 +44,7 @@ const store = new Vuex.Store({
 				iconPath: "/static/uview/example/component.png",
 				selectedIconPath: "/static/uview/example/component_select.png",
 				text: 'Home',
-				pagePath: '/pages/app/valveList/valveList' 
+				pagePath: '/pages/app/index/index' 
 			},
 			{
 				iconPath: "/static/uview/example/template.png",

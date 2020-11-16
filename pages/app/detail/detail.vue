@@ -1,95 +1,107 @@
 <template>
 	<view class="u-demo">
 		<view class="u-demo-wrap">
-				<view class="u-item-title">Serial Number: Value here</view>
-				<view class="u-item-title">Tag Number: Value here</view>
+			<u-field
+						v-model="valveInfo.serial"
+						label="Serial Number"
+						:disabled="true"
+					>
+					</u-field>
+					<u-field
+						v-model="valveInfo.tagNumber"
+						label="Tag Number"
+						:disabled="true"
+					>
+					</u-field>
+					<u-field
+						v-model="valveInfo.modelNumber"
+						label="Model Number"
+						:disabled="true"
+					>
+					</u-field>
+					<u-field
+						v-model="valveInfo.manufacturer"
+						label="Manufacturer"
+						:disabled="true"
+					>
+					</u-field>
+				<!-- <view class="u-item-title">Tag Number: Value here</view>
 				<view class="u-item-title">Model Number: Value here</view>
-				<view class="u-item-title">Manufacturer: Value here</view>
+				<view class="u-item-title">Manufacturer: Value here</view> -->
 		</view>
-		<view class="u-config-wrap">
-			<view class="u-config-title u-border-bottom">
-				Valve Images Information
-			</view>
-			<view>
-				<u-button @click="showImageTypeSelection = true">Upload Images</u-button>
-				<u-select v-model="showImageTypeSelection" :list="imageSelectType" @confirm="confirm"></u-select>
-			</view>
-			<view class="u-demo-wrap">
-				<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="reachBottom">
-					<view class="page-box">
-						<u-grid :col="2">
-							<view v-for="(item, index) in  imageList" :key="index">
-								<u-grid-item>
-									<image :src="item.src" width="250rpx" height="250rpx"></image>
-								</u-grid-item>
-							</view>
-						</u-grid>
-					</view>
-				</scroll-view>
+		<view class="pre-box" v-if="!showUploadList">
+			<view class="pre-item" v-for="(item, index) in lists" :key="index">
+				<image class="pre-item-image" :src="item.url" mode="aspectFill"></image>
+				<view class="u-delete-icon" @tap.stop="deleteItem(index)">
+					<u-icon name="close" size="20" color="#ffffff"></u-icon>
+				</view>
+				<u-line-progress v-if="item.progress > 0 && !item.error" :show-percent="false" height="16" class="u-progress"
+				 :percent="item.progress"></u-line-progress>
 			</view>
 		</view>
+		<u-upload @on-choose-fail="onChooseFail" :before-remove="beforeRemove" ref="uUpload" :custom-btn="customBtn" :show-upload-list="showUploadList" :action="action" :auto-upload="autoUpload" :file-list="fileList"
+		 :show-progress="showProgress" :deletable="deletable" :max-count="maxCount" @on-list-change="onListChange">
+			<view v-if="customBtn" slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
+				<u-icon name="photo" size="60" :color="$u.color['lightColor']"></u-icon>
+			</view>
+		</u-upload>
+		<u-button :custom-style="{marginTop: '20rpx'}" @click="upload">上传</u-button>
+		<u-button :custom-style="{marginTop: '40rpx'}" @click="clear">清空列表</u-button>
 		
 	</view>
 	
 </template>
 
 <script>
+	
 	export default {
 		data() {
 			return {
+				action: 'http://184.64.19.165:3080/v1/vkc/Valves/Image/RV/20200909141144052587',
+				fileList: [],
 				current: 0,
 				show: true,
+				//repairKey:this.$route.query.repairKey,
+				//equipType:this.$route.query.equipType,
 				bgColor: '#ffffff',
 				borderTop: true,
 				midButton: true,
 				inactiveColor: '#909399',
 				activeColor: '#5098FF',
 				showImageTypeSelection: false,
-				imageSelectType: [
-					{
-						value: '1',
-						label: 'Camera'
-					},
-					{
-						value: '2',
-						label: 'Gallary'
-					}
-				],
-				list: [{
-						iconPath: "/static/uview/example/min_button.png",
-						selectedIconPath: "/static/uview/example/min_button_select.png",
-						text: 'Add Image',
-						midButton: true,
-						customIcon: false,
-					}],
-				imageList:[
-					{
-						id: 1,
-						src:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604422766169&di=7507d548d8c042746907b2f3944b9431&imgtype=0&src=http%3A%2F%2Fcbu01.alicdn.com%2Fimg%2Fibank%2F2015%2F749%2F942%2F2616249947_556392056.jpg'
-					},
-					{
-						id: 2,
-						src:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188133365,2901067113&fm=26&gp=0.jpg'
-					},
-					{
-						id: 3,
-						src:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604422766156&di=6cd59894d40103fd5b3f4439d9a9a8cb&imgtype=0&src=http%3A%2F%2Fi03.c.aliimg.com%2Fimg%2Fibank%2F2014%2F211%2F198%2F1876891112_970172961.310x310.jpg'
-					},
-					{
-						id: 4,
-						src:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604422815387&di=6d61b3ae6ee86f54601986a11a22eb2d&imgtype=0&src=http%3A%2F%2Ffile.youboy.com%2Fa%2F26%2F4%2F4%2F7%2F6908087s.jpg'
-					},
-					{
-						id: 5,
-						src:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604422815386&di=891bc2f01683ad4bca5252fd95eae4ee&imgtype=0&src=http%3A%2F%2Fimg24.hc360.cn%2F24%2Fbusin%2F178%2F130%2Fb%2F24-178130664.jpg'
-					},
-					{
-						id: 6,
-						src:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604422815381&di=376b5c88aeff17edca59c47b609b3332&imgtype=0&src=http%3A%2F%2Fimg2018.cn5135.com%2Fuploads%2FPic%2F2018%2F4%2F17%2F112089_20184179102673.jpg'
-					}
-					
-				]
+				showUploadList: true,
+				customBtn: false,
+				autoUpload: false,
+				showProgress: true,
+				deletable: true,
+				customStyle: false,
+				maxCount: 2,
+				valveInfo:{
+					serial:null,
+					tagNumber:null,
+					modelNumber:null,
+					manufacturer:null
+				},
+				lists: [],
+				
 			}
+		},
+		onLoad(){
+			
+			let request={uniquekey:'20200728092208090538'};
+			this.$u.get('/v1/vkc/Valves/RV',request).then(res => {
+			console.log(res);
+				if (res.code == 200) {
+					
+				   this.valveInfo.serial=res.result.data[0].serialnumber;
+				   this.valveInfo.tagNumber=res.result.data[0].tagnumber;
+				   this.valveInfo.modelNumber=res.result.data[0].modelnumber;
+				   this.valveInfo.manufacturer=res.result.data[0].maintfor;
+				} 
+			
+			}, err => {
+				console.log(err);
+			})
 		},
 		methods: {
 			confirm(e) {
@@ -122,6 +134,25 @@
 					break;
 				}
 				
+			},
+			upload() {
+				this.$refs.uUpload.upload();
+			},
+			clear() {
+				this.$refs.uUpload.clear();
+			},
+			onChooseFail(e) {
+				// console.log(e);
+			},
+			onListChange(lists) {
+				// console.log('onListChange', lists);
+				this.lists = lists;
+			},
+			deleteItem(index) {
+				this.$refs.uUpload.remove(index);
+			},
+			beforeRemove(index, lists) {
+				return true;
 			},
 			modeChange(index) {
 				this.mode = index == 0 ? 'circle' : 'square';

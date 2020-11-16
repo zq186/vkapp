@@ -92,6 +92,7 @@
 </template>
 
 <script>
+	
 	export default {
 		data() {
 			return {
@@ -125,6 +126,7 @@
 			
 		},
 		methods: {
+			
 			reachBottom() {
 				// 此tab为空数据
 				if (this.current != 2) {
@@ -194,9 +196,14 @@
 				this.current = current;
 			},
 			onclick(value) {
-
+				//this.valveList(value);
+				console.log(value);
 				this.$u.route({
-					url: 'pages/app/detail/detail'
+					url: 'pages/app/detail/detail',
+					params:{
+						repairKey:value.uniquekey,
+						equipType:this.current
+					}
 				})
 			}
 		}
