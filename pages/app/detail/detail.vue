@@ -39,7 +39,7 @@
 				 :percent="item.progress"></u-line-progress>
 			</view>
 		</view>
-		<u-upload @on-choose-fail="onChooseFail" :before-remove="beforeRemove" ref="uUpload" :custom-btn="customBtn" :show-upload-list="showUploadList" :action="action" :auto-upload="autoUpload" :file-list="fileList"
+		<u-upload @on-choose-fail="onChooseFail" :before-remove="beforeRemove" ref="uUpload" :custom-btn="customBtn" :show-upload-list="showUploadList" :action="action" :header="header"  :auto-upload="autoUpload" :file-list="fileList"
 		 :show-progress="showProgress" :deletable="deletable" :max-count="maxCount" @on-list-change="onListChange">
 			<view v-if="customBtn" slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 				<u-icon name="photo" size="60" :color="$u.color['lightColor']"></u-icon>
@@ -57,10 +57,13 @@
 	export default {
 		data() {
 			return {
-				action: 'http://184.64.19.165:3080/v1/vkc/Valves/Image/RV/20200909141144052587',
+				action: '',
 				fileList: [],
 				current: 0,
 				show: true,
+				header:{
+					Authorization:uni.getStorageSync('Authorization')
+				},
 				//repairKey:this.$route.query.repairKey,
 				//equipType:this.$route.query.equipType,
 				bgColor: '#ffffff',
@@ -87,8 +90,7 @@
 			}
 		},
 		onLoad(){
-			
-			let request={uniquekey:'20200728092208090538'};
+			let request={uniquekey:this.$route.query.repairKey};
 			this.$u.get('/v1/vkc/Valves/RV',request).then(res => {
 			console.log(res);
 				if (res.code == 200) {
@@ -136,7 +138,24 @@
 				
 			},
 			upload() {
-				this.$refs.uUpload.upload();
+				console.log( this.$refs.uUpload.lists);
+				var file =  this.$refs.uUpload.lists[0].file;
+				var reader = new FileReader();  
+				reader.readAsDataURL(file);
+				let _this=this;
+				reader.onload=function(e){  
+					var request={
+						  file:e.target.result,
+						  recorddata:{
+							  imagefor:'123',
+							  filename:file.name
+						  }
+					  }
+					  _this.$u.post('/v1/vkc/Valves/Image/RV/'+_this.$route.query.repairKey,request).then(res=>{
+					  	
+					  })
+				    } 
+				//this.$refs.uUpload.upload();
 			},
 			clear() {
 				this.$refs.uUpload.clear();

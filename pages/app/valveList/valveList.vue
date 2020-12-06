@@ -100,6 +100,21 @@
 					[],
 					[]
 				],
+				rvListInfo:{
+					request:{
+						"mr": true,
+						"offset": 1,
+						"limit": 10,
+						"et": "RV",
+						"whereClause": "1=1",
+						"pKey": "20200727092324600000",
+						"oKey": "20200727092222600000",
+						"retcntonly": false
+					},
+					response:{
+						
+					}
+				},
 				dataList:[],
 				list: [{
 						name: 'Relief Valve'
@@ -130,6 +145,7 @@
 			reachBottom() {
 				// 此tab为空数据
 				if (this.current != 2) {
+					this.rvListInfo.request.offset++;
 					this.loadStatus.splice(this.current, 1, "loading")
 					setTimeout(() => {
 						this.getRepairList(this.current);
@@ -142,18 +158,8 @@
 			// 页面数据
 			getRepairList(idx) {
 				let _this=this;
-				var request = {
-					"mr": true,
-					"offset": 1,
-					"limit": 10,
-					"et": "RV",
-					"whereClause": "1=1",
-					"pKey": "20200727092324600000",
-					"oKey": "20200727092222600000",
-					"retcntonly": false
-				}
-				
-				this.$u.post('/v1/vkc/Valves', request).then(res => {
+			
+				this.$u.post('/v1/vkc/Valves', _this.rvListInfo.request).then(res => {
 				
 					if (res.code == 200) {
 						 let dataList = res.result.repairdetail;
