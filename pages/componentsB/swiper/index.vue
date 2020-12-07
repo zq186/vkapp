@@ -52,7 +52,7 @@
 				title: false,
 				mode: 'round',
 				indicatorPos: 'bottomCenter',
-				effect3d: false,
+				effect3d: true,
 				
 			}
 		},

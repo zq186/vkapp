@@ -101,6 +101,10 @@
             }
             
         }
+        ,{
+            "path" : "pages/app/imageList/imageList",
+            "style" : {}
+        }
     ],
 	"subPackages": [{
 			"root": "pages/componentsC",

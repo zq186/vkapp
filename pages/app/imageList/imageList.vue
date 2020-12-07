@@ -1,47 +1,29 @@
 <template>
 	
 	<view class="wrap">
-		<view class="item">
-			
-			<view class="title"  text='123' >
-				SerialNumber/TagNumber
-			</view>
-			<view class="title"  text='123' >
-				SerialNumber/DateTested
-			</view>
-			<!-- <u-field
-						v-model="valveInfo.serial"
-						label="Serial Number"
-						:disabled="true"
-					>
-					</u-field>
-					<u-field
-						v-model="valveInfo.tagNumber"
-						label="Tag Number"
-						:disabled="true"
-					>
-					</u-field>
-					<u-field
-						v-model="valveInfo.modelNumber"
-						label="Model Number"
-						:disabled="true"
-					>
-					</u-field>
-					<u-field
-						v-model="valveInfo.manufacturer"
-						label="Manufacturer"
-						:disabled="true"
-					>
-					</u-field> -->
-				<!-- <view class="u-item-title">Tag Number: Value here</view>
-				<view class="u-item-title">Model Number: Value here</view>
-				<view class="u-item-title">Manufacturer: Value here</view> -->
+	<!-- <swiper class="swiper" @change="change">
+			<swiper-item>
+				<u-grid :col="3" @click="click" hover-class="hover-class">
+					<u-grid-item v-for="(item, index) in imageList" :index="index" :key="index">
+						<u-image  mode="aspectFill" :src="item"></u-image>
+					
+					</u-grid-item>
+				</u-grid>
 				
-		</view>
-		<view class="item">
-			<u-swiper @change="change" :height="250" :list="imageList" :title="title" :effect3d="effect3d"
-			:indicator-pos="indicatorPos" :mode="mode" :interval="3000" @click="click"></u-swiper>
-		</view>
+			</swiper-item>
+			
+		</swiper> -->
+	<view class="page">
+	        <view class="image-list">
+	            <view class="image-item" v-for="(item,index) in imageList" :key="index">
+	                <view class="image-content">
+	                    <image style="width: 200px; height: 200px; background-color: #eeeeee;" :mode="left" :src="item"
+	                        @error="imageError"></image>
+	                </view>
+	                <view class="image-title">{{item.text}}</view>
+	            </view>
+	        </view>
+	    </view>
 		<view class="pre-box" v-if="!showUploadList">
 			<view class="pre-item" v-for="(item, index) in lists" :key="index">
 				<image class="pre-item-image" :src="item.url" mode="aspectFill"></image>
@@ -99,41 +81,29 @@
 					manufacturer:null
 				},
 				lists: [],
-				imageList: [{
-						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
-					},
-					{
-						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
-						title: '身无彩凤双飞翼，心有灵犀一点通'
-					},
-					{
-						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-					}
-				],
 				title: false,
 				mode: 'round',
 				indicatorPos: 'bottomCenter',
 				effect3d: true,
-				
+				current: 0,
+			    imageList: ['http://47.97.109.45/valve/1.jpg','http://47.97.109.45/valve/1.jpg','http://47.97.109.45/valve/1.jpg','http://47.97.109.45/valve/1.jpg','http://47.97.109.45/valve/1.jpg','http://47.97.109.45/valve/1.jpg']
 			}
 		},
 		onLoad(){
 			let request={uniquekey:this.$route.query.repairKey};
-			this.$u.get('/v1/vkc/Valves/RV',request).then(res => {
-			console.log(res);
-				if (res.code == 200) {
+			// this.$u.get('/v1/vkc/Valves/RV',request).then(res => {
+			// console.log(res);
+			// 	if (res.code == 200) {
 					
-				   this.valveInfo.serial=res.result.data[0].serialnumber;
-				   this.valveInfo.tagNumber=res.result.data[0].tagnumber;
-				   this.valveInfo.modelNumber=res.result.data[0].modelnumber;
-				   this.valveInfo.manufacturer=res.result.data[0].maintfor;
-				} 
+			// 	   this.valveInfo.serial=res.result.data[0].serialnumber;
+			// 	   this.valveInfo.tagNumber=res.result.data[0].tagnumber;
+			// 	   this.valveInfo.modelNumber=res.result.data[0].modelnumber;
+			// 	   this.valveInfo.manufacturer=res.result.data[0].maintfor;
+			// 	} 
 			
-			}, err => {
-				console.log(err);
-			})
+			// }, err => {
+			// 	console.log(err);
+			// })
 		},
 		methods: {
 			confirm(e) {
@@ -226,25 +196,13 @@
 			levelChange(index) {
 				this.showLevel = !index;
 			},
-			click(index) {
-				this.$u.route({
-					url: 'pages/app/imageList/imageList',
-					params:{
-						
-					}
-				})
-			},
+			change(e) {
+					this.current = e.detail.current;
+				}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.title {
-		font-size: 50rpx;
-		position: relative;
-		
-		padding-left: 52rpx;
-		padding-bottom: 52rpx;
-		
-	}
+	
 </style>

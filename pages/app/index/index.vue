@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="u-demo-area" >
+		<view class="u-search-box" >
 			<u-toast ref="uToast"></u-toast>
 			<u-search v-model="searchValue" @change="searchTxtChange" @custom="custom" @search="search"  :shape="shape" :clearabled="clearabled" 
 			:show-action="showAction" :input-align="inputAlign" @clear="clear"></u-search>
@@ -106,9 +106,23 @@
 				searchValue: '',
 				shape: 'round',
 				clearabled: true,
-				showAction: true,
+				showAction: false,
 				inputAlign: 'left',
-				
+				rvListInfo:{
+					request:{
+						"mr": true,
+						"offset": 1,
+						"limit": 10,
+						"et": "RV",
+						"whereClause": "1=1",
+						"pKey": "20200727092324600000",
+						"oKey": "20200727092222600000",
+						"retcntonly": false
+					},
+					response:{
+						
+					}
+				},
 				repairList: [
 					[],
 					[]
@@ -145,13 +159,14 @@
 			},
 			custom(value) {
 				//console.log(value);
-				this.$u.toast('输入值为：' + value)
+				//this.$u.toast('输入值为：' + value)
 			},
 			search(value) {
-				this.$refs.uToast.show({
-					title: '搜索内容为：' + value,
-					type: 'success'
-				})
+				debugger;
+				this.rvListInfo.request.offset=0;
+				//this.rvListInfo.request.whereClause=" serial like '%"+value+"%' or tagnumber like '%"+value+"%' ";
+				this.rvListInfo.request.whereClause=" serial like '"+value+"%'  ";
+				this.getRepairList(this.current);
 			},
 			clear() {
 				// console.log(this.value);
@@ -159,6 +174,7 @@
 			reachBottom() {
 				// 此tab为空数据
 				if (this.current != 2) {
+					this.rvListInfo.request.offset++;
 					this.loadStatus.splice(this.current, 1, "loading")
 					setTimeout(() => {
 						this.getRepairList(this.current);
@@ -171,18 +187,8 @@
 			// 页面数据
 			getRepairList(idx) {
 				let _this=this;
-				var request = {
-					"mr": true,
-					"offset": 1,
-					"limit": 10,
-					"et": "RV",
-					"whereClause": "1=1",
-					"pKey": "20200727092324600000",
-					"oKey": "20200727092222600000",
-					"retcntonly": false
-				}
-				
-				this.$u.post('/v1/vkc/Valves', request).then(res => {
+				if(this.rvListInfo.request.offset==0)this.repairList[idx]=[];
+				this.$u.post('/v1/vkc/Valves', _this.rvListInfo.request).then(res => {
 				
 					if (res.code == 200) {
 						 let dataList = res.result.repairdetail;
@@ -406,5 +412,8 @@
 
 	.swiper-item {
 		height: 100%;
+	}
+	.u-search-box{
+		//width: 80%;
 	}
 </style>
