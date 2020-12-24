@@ -68,21 +68,17 @@
             "path" : "pages/app/login/login",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+				"navigationStyle": "custom" 
             }
             
         }
         ,{
             "path" : "pages/app/myCenter/myCenter",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/app/valveList/valveList",
             "style" : {
-				"navigationBarTitleText":"Home"
+				 
 			}
         }
+       
         ,{
             "path" : "pages/app/changeOwnerPlant/changeOwnerPlant",
             "style" :                                                                                    
@@ -103,7 +99,9 @@
         }
         ,{
             "path" : "pages/app/imageList/imageList",
-            "style" : {}
+            "style" : {
+				 "navigationBarTitleText": "imageList"
+			}
         }
     ],
 	"subPackages": [{

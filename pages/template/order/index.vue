@@ -348,6 +348,7 @@ export default {
 		},
 		// tab栏切换
 		change(index) {
+			debugger;
 			this.swiperCurrent = index;
 			this.getOrderList(index);
 		},

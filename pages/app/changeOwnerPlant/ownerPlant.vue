@@ -105,6 +105,7 @@
 				area: 0, //区级下标
 				areas: areas[0][0],
 				tabsIndex: 0,
+				owners:[]
 			}
 		},
 		mounted() {
@@ -139,15 +140,30 @@
 		},
 		methods: {
 			init() {
-				if (this.areaCode.length == 3) {
-					this.setProvince("", this.areaCode[0]);
-					this.setCity("", this.areaCode[1]);
-					this.setArea("", this.areaCode[2]);
-				} else if (this.defaultRegion.length == 3) {
-					this.setProvince(this.defaultRegion[0], "");
-					this.setCity(this.defaultRegion[1], "");
-					this.setArea(this.defaultRegion[2], "");
-				};
+				this.$u.get('/v1/vkc/OwnerPlant',{includeplants:true}).then(res => {
+				
+					// if (res.code == 200) {
+					// 	 let dataList = res.result.repairdetail;
+					// 	for (let i = 0; i < dataList.length; i++) {
+							
+					// 		let data = dataList[i];
+					// 		data.id = this.$u.guid();
+					// 		data.iconUrl='http://47.97.109.45/valve/1.jpg';
+					// 		this.repairList[idx].push(data);
+					// 	}
+					   
+					// } 
+					for (let i = 0; i < res.length; i++) {
+						
+						let data = res[i];
+						data.id = this.$u.guid();
+						data.iconUrl='http://47.97.109.45/valve/1.jpg';
+						this.repairList[idx].push(data);
+					}
+				
+				}, err => {
+					console.log(err);
+				})
 			},
 			setProvince(label = "", value = "") {
 				this.provinces.map((v, k) => {

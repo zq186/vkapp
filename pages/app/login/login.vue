@@ -45,9 +45,13 @@
 					if (res.code == 200) {
 						let userToken = 'Bearer ' + res.usertoken.authtoken;
 						uni.setStorageSync('Authorization',userToken)
-						this.$u.route({
-							url: 'pages/app/valveList/valveList'
-						})
+						// _this.$u.route({
+						// 	url: 'pages/app/index/index'
+						// })
+						uni.reLaunch({
+						    url: '../index/index'
+						});
+						
 					}
 				}, err => {
 					console.log(err);

@@ -17,13 +17,13 @@ export default [
 		groupName_en: 'Global Settings',
 		list: [
 			{
-				path: 'pages/app/changeOwnerPlant/changeOwnerPlant',
+				path: '../changeOwnerPlant/changeOwnerPlant',
 				icon: 'debounce',
 				title: '切换集团工厂',
 				title_en: 'Change Owner/Plant',
 			},
 			{
-				path: 'pages/app/login/login',
+				path: '../login/login',
 				icon: 'debounce',
 				title: '登出',
 				title_en: 'logout',

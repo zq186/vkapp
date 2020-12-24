@@ -1,134 +1,101 @@
 <template>
-	<view>
-		<view class="u-search-box" >
+	<view style="height: 100%;">
+		<view class="u-search-box">
 			<u-toast ref="uToast"></u-toast>
-			<u-search v-model="searchValue" @change="searchTxtChange" @custom="custom" @search="search"  :shape="shape" :clearabled="clearabled" 
-			:show-action="showAction" :input-align="inputAlign" @clear="clear"></u-search>
+			<u-search bg-color="#e5e5e5" placeholder="Please enter key words"   action-text="search"  v-model="searchValue" @change="searchTxtChange" @custom="search"
+			 @search="search" :shape="shape"   :clearabled="clearabled" :show-action="showAction" :input-align="inputAlign" @clear="clear"></u-search>
 		</view>
 		<view class="wrap">
 			<view class="u-tabs-box">
-				<u-tabs-swiper activeColor="#f29100" ref="tabs" :list="list" :current="current" @change="change" :is-scroll="false" swiperWidth="750"></u-tabs-swiper>
+				<u-tabs-swiper activeColor="#f29100"   ref="tabs" :list="tabList" :current="current" @change="tabsChange" :is-scroll="false"
+				 swiperWidth="750"></u-tabs-swiper>
 			</view>
-			
-			<swiper class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+			<view class="loading" v-if="loadmore">
+						<u-loading mode="circle" color="blue" size="29"></u-loading>
+						<text>loading</text>
+			</view>
+			<swiper v-if="update" class="swiper-box" :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
 				<swiper-item class="swiper-item">
-					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="reachBottom">
+					<scroll-view :scroll-top="scrollTop" scroll-y="true"  style="height: 100%;width: 100%;white-space: nowrap;"
+					 :scroll-with-animation="true" :refresher-triggered="triggered" @scrolltoupper="refreshData" @scrolltolower="reachBottom">
 						<view class="page-box">
-								<view class="order" v-for="(item, index) in  repairList[0]" :key="item.id">
-								<view class="item" @click="onclick(item)"  >
+							<!-- <u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore> -->
+							<view class="order" v-for="(item, index) in  repairList[0]" :key="item.id">
+								<view class="item" @click="onclick(item)">
 									<view class="left">
 										<image :src="item.iconUrl" mode="aspectFill"></image>
 									</view>
 									<view class="content">
-										<view class="title u-line-2">{{ item.tagnumber }}/{{ item.serial }}</view>
+										<view class="title u-line-2">{{ item.tagnumber }}</view>
+										<view class="title u-line-2">{{ item.serial }}</view>
 										<view class="type">{{ item.createdby }}</view>
-
 									</view>
-
 								</view>
 							</view>
-							
 							<u-loadmore :status="loadStatus[0]" bgColor="#f2f2f2"></u-loadmore>
 						</view>
 					</scroll-view>
 				</swiper-item>
 				<swiper-item class="swiper-item">
-					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="reachBottom">
+					<scroll-view  :scroll-top="scrollTop" scroll-y="true" style="height: 100%;width: 100%;white-space: nowrap;"
+					 :scroll-with-animation="true" @scrolltoupper="refreshData" @scrolltolower="reachBottom">
 						<view class="page-box">
-							
-
-								<view class="item" @click="onclick(item)" v-for="(item, index) in repairList" :key="index">
+							<view class="order" v-for="(item, index) in  repairList[1]" :key="item.id">
+								<view class="item" @click="onclick(item)">
 									<view class="left">
-										<image :src="item.goodsUrl" mode="aspectFill"></image>
+										<image :src="item.iconUrl" mode="aspectFill"></image>
 									</view>
 									<view class="content">
-										<view class="title u-line-2">{{ item.title }}</view>
-										<view class="type">{{ item.type }}</view>
-
+										<view class="title u-line-2">{{ item.tagnumber }}</view>
+										<view class="title u-line-2">{{ item.serial }}</view>
+										<view class="type">{{ item.createdby }}</view>
 									</view>
-
-								</view>
-
-							
-							<u-loadmore :status="loadStatus[1]" bgColor="#f2f2f2"></u-loadmore>
-						</view>
-					</scroll-view>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<scroll-view scroll-y style="height: 100%;width: 100%;">
-						<view class="page-box">
-							<view>
-								<view class="centre">
-									<image src="https://cdn.uviewui.com/uview/template/taobao-order.png" mode=""></image>
-									<view class="explain">
-										No items to dislay
-
-									</view>
-									<view class="btn">Add Valve</view>
 								</view>
 							</view>
-						</view>
-					</scroll-view>
-				</swiper-item>
-				<swiper-item class="swiper-item">
-					<scroll-view scroll-y style="height: 100%;width: 100%;" @scrolltolower="reachBottom">
-						<view class="page-box">
-							
-
-								<view class="item" @click="onclick(item)" v-for="(item, index) in repairList" :key="index">
-									<view class="left">
-										<image :src="item.goodsUrl" mode="aspectFill"></image>
-									</view>
-									<view class="content">
-										<view class="title u-line-2">{{ item.title }}</view>
-										<view class="type">{{ item.type }}</view>
-									</view>
-
-								</view>
-
-							
-							<u-loadmore :status="loadStatus[3]" bgColor="#f2f2f2"></u-loadmore>
+							<u-loadmore :status="loadStatus[1]" bgColor="#f2f2f2"></u-loadmore>
 						</view>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
 		</view>
-		 <u-tabbar @change="tabbarChange" :v-model="barIndex"  :list="vuex_tabbar" :mid-button="false"></u-tabbar>
+		<u-tabbar @change="tabbarChange" :v-model="barIndex" :list="vuex_tabbar" :mid-button="false"></u-tabbar>
 	</view>
 </template>
 
 <script>
-	
 	export default {
 		data() {
 			return {
-				
 				searchValue: '',
+				update: true,
 				shape: 'round',
+				triggered:true,
 				clearabled: true,
 				showAction: false,
 				inputAlign: 'left',
-				rvListInfo:{
-					request:{
+				scrollTop: 0,
+				loadmore:false,
+				old: {
+					scrollTop: 0
+				},
+				ValveListInfo: {
+					request: {
 						"mr": true,
 						"offset": 1,
 						"limit": 10,
-						"et": "RV",
+						"et": "0",
 						"whereClause": "1=1",
-						"pKey": "20200727092324600000",
-						"oKey": "20200727092222600000",
+						"pKey": "",
+						"oKey": "",
 						"retcntonly": false
-					},
-					response:{
-						
 					}
 				},
 				repairList: [
 					[],
 					[]
 				],
-				dataList:[],
-				list: [{
+				dataList: [],
+				tabList: [{
 						name: 'Relief Valve'
 					},
 					{
@@ -136,83 +103,124 @@
 					}
 				],
 				swiperCurrent: 0,
-				current:0,
-				barIndex:0,
+				current: 0,
+				barIndex: 0,
 				tabsHeight: 0,
 				dx: 0,
-				loadStatus: ['loadmore', 'loadmore', 'loadmore', 'loadmore'],
-				
+				loadStatus: ['loadmore', 'loadmore']
 			};
 		},
 		onLoad() {
+			//debugger;
+			this.ValveListInfo.request.oKey = this.vuex_tenant.ownerKey;
+			this.ValveListInfo.request.pKey = this.vuex_tenant.plantKey;
 			this.getRepairList(0);
-			//this.getRepairList(1);
-			//this.getRepairList(3);
+			setTimeout(()=>{
+				this.getRepairList(1);
+			},3000)
+			//
 		},
 		computed: {
-			
+
 		},
 		methods: {
 			searchTxtChange(value) {
-				// 搜索框内容变化时，会触发此事件，value值为输入框的内容
-				//console.log(value);
-			},
-			custom(value) {
-				//console.log(value);
-				//this.$u.toast('输入值为：' + value)
 			},
 			search(value) {
-				debugger;
-				this.rvListInfo.request.offset=0;
+				this.repairList[this.current] = [];
+				this.ValveListInfo.request.offset = 1;
 				//this.rvListInfo.request.whereClause=" serial like '%"+value+"%' or tagnumber like '%"+value+"%' ";
-				this.rvListInfo.request.whereClause=" serial like '"+value+"%'  ";
+				if (value === '') {
+					this.ValveListInfo.request.whereClause = "  1=1 ";
+				} else {
+					this.ValveListInfo.request.whereClause = "  serial like '%" + value + "%'  ";
+				}
+				//this.ValveListInfo.request.whereClause="  serial like '%"+value+"%'  ";
+
 				this.getRepairList(this.current);
 			},
 			clear() {
 				// console.log(this.value);
 			},
 			reachBottom() {
-				// 此tab为空数据
-				if (this.current != 2) {
-					this.rvListInfo.request.offset++;
-					this.loadStatus.splice(this.current, 1, "loading")
-					setTimeout(() => {
-						this.getRepairList(this.current);
-					}, 1200);
-				}
+				this.ValveListInfo.request.offset++;
+				this.loadStatus.splice(this.current, 1, "loading")
+				setTimeout(() => {
+					this.getRepairList(this.current);
+				}, 200);
 			},
-			tabbarChange(index){
-				this.barIndex=index++;
+			refreshData(e) {
+				this.loadStatus.splice(this.current, 1, "loading");
+				this.ValveListInfo.request.offset = 1;
+				this.repairList[this.current] = [];
+				this.getRepairList(this.current);
+
+			},
+			goTop() {
+				this.scrollTop = this.old.scrollTop
+				this.$nextTick(function() {
+					this.scrollTop = 0
+				});
+				// uni.showToast({
+				//     icon:"none",
+				//     title:"纵向滚动 scrollTop 值已被修改为 0"
+				// })
+			},
+			tabbarChange(index) {
+				this.barIndex = index++;
 			},
 			// 页面数据
 			getRepairList(idx) {
-				let _this=this;
-				if(this.rvListInfo.request.offset==0)this.repairList[idx]=[];
-				this.$u.post('/v1/vkc/Valves', _this.rvListInfo.request).then(res => {
-				
+				let _this = this;
+				_this.ValveListInfo.request.et = "" + idx + "";
+
+				this.$u.post('/v1/vkc/Valves', _this.ValveListInfo.request).then(res => {
 					if (res.code == 200) {
-						 let dataList = res.result.repairdetail;
+						//debugger;
+						if(_this.ValveListInfo.request.offset==0)
+						{
+							_this.repairList[idx]=[];
+						}
+						let dataList = res.result.repairdetail;
 						for (let i = 0; i < dataList.length; i++) {
-							
+
 							let data = dataList[i];
 							data.id = this.$u.guid();
-							data.iconUrl='http://47.97.109.45/valve/1.jpg';
-							this.repairList[idx].push(data);
+							//data.iconUrl = 'http://47.97.109.45/valve/1.jpg';
+							if(data.image=='')
+							{
+								data.iconUrl = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/wAALCACWAPIBAREA/8QAGwABAAMBAQEBAAAAAAAAAAAAAAIDBQQGAQf/xAA0EAACAgIBAgMGAwcFAAAAAAAAAQIDBBEFEiETMUEUMlFhcZEGM6EjQkNScoGxFRbh8PH/2gAIAQEAAD8A/fwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZWbyVmPlOuCg1FLeyEebkvfpT+ki6PNUP3oTj+pdHk8SX8VL6povjk0z922D+kkWgAAAAAAAAAAAA8vmT8Xk7F8bOnt9jblxWJJfluP8AS2UT4Sl+5bZH66ZTLg7F7l8X9Y6ODLw7cNx8Rxal5OLNfhU/YXJtvc3o0gAAAAAAAAAAARckt7a7LZ5TCftHK1+vVY5P/J63yBC22umDnZOMYr1bPPc7fGeRT0vcfD6vubHFw6ONoWtNx39zsAAAAAAAAAABCyTjXKSW2k2jInl32ec2l8I9hVNwxsq5+can3Zk8NZGvMlfPfTTVKb1/35kc/mL82XTt11b7QT/yzsq/Ec68KMJV9d67dTfZ/NmXfmX5tyd1jk29Jei+h08zLXJTrX8OEYL7HrMeHh49cP5YpfoWgAAAAAAAAAAGFdX4d04fB9ivMmquBypes2oox+NyMaEMqvItdXjQUFJR3ruT/wBPxpvVPK40vlPcT4+GzH+VKi5fGFqJ4XF5sORx/FxbIwVibk120Uzn7XzrS7qzI0vv/wAHugAAAAAAAAAAAZfI19N8Z+kl+pl89J18HRH0nbtv7nl+r5jq+YUtPaen8i+vPyqteHk3R18Js7OAi7+co296bm3/AGPegAAAAAAAAAAA5OQh1Y/V6xezihlzjUq5QhOC9JIrlVg3v9px1Um/Nxj3H+3eNyFv2W2n6TaOaz8H4734eVbH4dSTOSz8H5K/Ky6pf1RaOvgeCyuOz535Hh9Kg4x6Zb3v/wAPSgAAAAAAAAAAAjOKnBxfk1pnNDj6Y92nJ/NnTGuMFqEUl8kSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKq8iq6yyFdkZSrfTNL91n2q2u6tTrkpRba2iwrpuryKo21S6oS8nrzLAAAAAAAAAAAAADBpjKnIzM2tNyryZRsiv3oaW/7rzK8K1zxsGrx5V0Wytk5wfT1NS7Lfp5tmlxls7IXwdjtrrucK7G9uUdL19dPaM3j7b8x4VdmVd0zx5yl0z05NT15k8e29Y2DkyyrZznkeDJSl2cdtd18ey7kJ5dmoZNd1upXpJ2W62urTSguyX1PmRkzWHk3yzbYZSucFUp60urSSX09SV+RkzszZuyVc6bHGH7dQjFJdm4+u/M3q25VQctdTSb0TAAAAAAAAAABBQjHeopdT29LzZGWPTKrwnVW6/wCTpWvsThCNcVGEVGK8klpIjGquGnGuMWlpaSWkFVWkkoR1F7S15P4kVi0KUpKmtSl7z6FtnLdxjvsl4mRY6pS6nDpW/PeurW9dvI6549NlisnTXKa8pSim0WgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//2Q==';
+							}else{
+								data.iconUrl='data:image/jpeg;base64,'+data.image;
+							}
+							_this.repairList[idx].push(data);
 						}
-					   
-					} 
-
+						
+						if (dataList.length<=res.result.pagesize||dataList.length==0) {
+							this.loadStatus.splice(this.current, 1, "nomore");
+						}
+					}else{
+						this.loadStatus.splice(this.current, 1, "nomore");
+					}
+					//this.triggered=false;
+					//uni.stopPullDownRefresh();
+					this.update = false;
+					this.update = true;
 				}, err => {
 					console.log(err);
+					
 				})
 
-				
-				this.loadStatus.splice(this.current, 1, "loadmore")
+
+				//this.loadStatus.splice(this.current, 1, "loadmore")
 			},
 			// tab栏切换
-			change(index) {
+			tabsChange(index) {
+				console.log(index);
+				this.ValveListInfo.request.offset = 1;
 				this.swiperCurrent = index;
-				this.getRepairList(index);
+				//this.repairList[index]=[];
+				//this.getRepairList(index);
 			},
 			transition({
 				detail: {
@@ -235,9 +243,9 @@
 				console.log(value);
 				this.$u.route({
 					url: 'pages/app/detail/detail',
-					params:{
-						repairKey:value.uniquekey,
-						equipType:this.current
+					params: {
+						repairKey: value.uniquekey,
+						equipType: this.current===0?'rv':'cv'
 					}
 				})
 			}
@@ -256,15 +264,13 @@
 </style>
 
 <style lang="scss" scoped>
-	
-	.u-demo {}
 	.order {
 		width: 710rpx;
 		background-color: #ffffff;
-		margin: 8rpx auto;
+		margin: 20rpx auto;
 		border-radius: 20rpx;
 		box-sizing: border-box;
-		padding: 10rpx;
+		padding: 20rpx;
 		font-size: 28rpx;
 
 		.top {
@@ -289,7 +295,7 @@
 
 		.item {
 			display: flex;
-			margin: 8rpx 0 0;
+			margin: 20rpx 0 0;
 
 			.left {
 				margin-right: 20rpx;
@@ -344,6 +350,10 @@
 			.total-price {
 				font-size: 32rpx;
 			}
+		}
+
+		.page-box {
+			display: inline-block;
 		}
 
 		.bottom {
@@ -402,7 +412,7 @@
 	.wrap {
 		display: flex;
 		flex-direction: column;
-		height: calc(100vh - var(--window-top));
+		height: calc(88vh - var(--window-top));
 		width: 100%;
 	}
 
@@ -413,7 +423,20 @@
 	.swiper-item {
 		height: 100%;
 	}
-	.u-search-box{
-		//width: 80%;
+
+	.u-search-box {
+		 //margin: 10rpx ; 
 	}
+	.loading {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 90rpx;
+				margin-bottom: 20rpx;
+	
+				text {
+					margin-left: 20rpx;
+					font-size: 30rpx;
+				}
+			}
 </style>

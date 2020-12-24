@@ -54,9 +54,21 @@
 		},
 		methods: {
 			openPage(path) {
-				this.$u.route({
-					url: path
-				})
+				if(path==='../login/login')
+				{
+					uni.redirectTo({
+					    url: path
+					});
+				}else{
+					// this.$u.route({
+					// 	url: path
+					// })
+					uni.navigateTo({
+						url:path
+					})
+				}	
+			
+				
 			},
 			getGroupTitle(item) {
 				return this.$i18n.locale == 'zh' ? item.groupName : item.groupName_en
